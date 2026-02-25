@@ -1,15 +1,15 @@
 // BookingVerificationScreen.tsx — Service details & confirm (/home/verification)
 // Shows full service breakdown before final booking confirmation.
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router";
 import {
-  CaretLeft, MapPin, User, Star, Clock, CurrencyDollar,
+  CaretLeft, User, Star, Clock, CurrencyDollar,
   CheckCircle, CaretDown, CaretUp, ArrowRight, ShieldCheck,
+  Truck, PipeWrench, Snowflake, Lightning, Tree, Hammer, HouseLine, Bug,
 } from "@phosphor-icons/react";
 import { motion, AnimatePresence } from "motion/react";
 import { T, font, R, HIG, TYPE } from "../tokens";
-import { SERVICES } from "../data";
 
 const IOS = [0.32, 0.72, 0, 1] as const;
 
@@ -31,6 +31,22 @@ const DEFAULT_GUIDELINES = [
   "Rate us after your service to improve quality",
 ];
 
+const SERVICE_ICON_MAP: Record<string, React.ElementType> = {
+  towing: Truck, plumber: PipeWrench, hvac: Snowflake, electrician: Lightning,
+  lawn: Tree, handyman: Hammer, roofing: HouseLine, pest: Bug,
+};
+
+const SERVICE_COLORS: Record<string, string> = {
+  towing: "#FF6A2B", plumber: "#2E93FA", hvac: "#00E096", electrician: "#FFC043",
+  lawn: "#34C759", handyman: "#FF8C00", roofing: "#A1A1A1", pest: "#FF2D55",
+};
+
+const SERVICE_CATEGORY_LABELS: Record<string, string> = {
+  towing: "Towing & Roadside", plumber: "Plumbing", hvac: "HVAC & Cooling",
+  electrician: "Electrical", lawn: "Lawn & Garden", handyman: "Handyman",
+  roofing: "Roofing", pest: "Pest Control",
+};
+
 export function BookingVerificationScreen() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -47,7 +63,10 @@ export function BookingVerificationScreen() {
     name: string; price: number; eta: string; rating: number; type: string; address: string;
   } | undefined;
 
-  const service    = SERVICES.find((s) => s.id === serviceId);
+  const ServiceIcon   = SERVICE_ICON_MAP[serviceId]        ?? Truck;
+  const serviceColor  = SERVICE_COLORS[serviceId]          ?? T.cta;
+  const categoryLabel = SERVICE_CATEGORY_LABELS[serviceId] ?? serviceName;
+
   const guidelines = GUIDELINES[serviceId] ?? DEFAULT_GUIDELINES;
 
   const [guidelinesOpen, setGuidelinesOpen] = useState(false);
@@ -127,7 +146,7 @@ export function BookingVerificationScreen() {
                 <div
                   style={{
                     display: "flex", alignItems: "center", gap: 4,
-                    backgroundColor: T.surfaceElevated,
+                    backgroundColor: T.bg,
                     border: `1px solid ${T.border}`,
                     borderRadius: R.full,
                     paddingTop: 4, paddingRight: 10, paddingBottom: 4, paddingLeft: 8,
@@ -146,7 +165,7 @@ export function BookingVerificationScreen() {
               <div
                 style={{
                   flex: 1,
-                  backgroundColor: T.surfaceElevated,
+                  backgroundColor: T.bg,
                   border: `1px solid ${T.border}`,
                   borderRadius: R.md,
                   paddingTop: 10, paddingRight: 12, paddingBottom: 10, paddingLeft: 12,
@@ -166,7 +185,7 @@ export function BookingVerificationScreen() {
               <div
                 style={{
                   flex: 1,
-                  backgroundColor: T.surfaceElevated,
+                  backgroundColor: T.bg,
                   border: `1px solid ${T.border}`,
                   borderRadius: R.md,
                   paddingTop: 10, paddingRight: 12, paddingBottom: 10, paddingLeft: 12,
@@ -233,25 +252,25 @@ export function BookingVerificationScreen() {
               />
             </div>
 
-            {/* Vendor location */}
+            {/* Service category */}
             <div style={{ display: "flex", alignItems: "flex-start", gap: 12, padding: "14px 16px" }}>
               <div
                 style={{
                   width: 32, height: 32, borderRadius: "50%",
-                  backgroundColor: T.surfaceElevated,
-                  border: `1px solid ${T.border}`,
+                  backgroundColor: `${serviceColor}1A`,
+                  border: `1px solid ${serviceColor}40`,
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  flexShrink: 0, marginTop: 2,
+                  flexShrink: 0,
                 }}
               >
-                <MapPin size={14} color={T.textSecondary} weight="fill" />
+                <ServiceIcon size={14} color={serviceColor} weight="fill" />
               </div>
               <div style={{ flex: 1 }}>
                 <span style={{ display: "block", color: T.textTertiary, fontSize: TYPE.caption1, fontFamily: font, marginBottom: 2 }}>
-                  Vendor location
+                  Service category
                 </span>
-                <span style={{ color: T.textPrimary, fontSize: TYPE.subhead, fontWeight: 500, fontFamily: font, letterSpacing: "-0.01em", lineHeight: 1.4 }}>
-                  {vendor?.address ?? "—"}
+                <span style={{ color: T.textPrimary, fontSize: TYPE.subhead, fontWeight: 500, fontFamily: font, letterSpacing: "-0.01em" }}>
+                  {categoryLabel}
                 </span>
               </div>
             </div>
