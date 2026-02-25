@@ -228,18 +228,6 @@ export function JobDetailScreen() {
               Rebook
             </span>
           </motion.button>
-          <motion.button
-            whileTap={{ scale: 0.97 }}
-            transition={{ type: "spring", stiffness: 600, damping: 35 }}
-            style={{
-              width: 52, height: 52,
-              backgroundColor: T.surfaceElevated, border: `1px solid ${T.border}`,
-              borderRadius: R.md, cursor: "pointer",
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}
-          >
-            <Phone size={20} color={T.textSecondary} weight="regular" />
-          </motion.button>
         </div>
       </div>
     </div>
