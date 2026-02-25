@@ -35,6 +35,9 @@ export function FullMapScreen() {
     ...SAVED_LOCATIONS.map((loc) => ({
       position: loc.position,
       type: "vendor" as const,
+      initials: loc.label[0].toUpperCase(),
+      avatarColor: loc.color,
+      // no rating — these are saved places, not vendor profiles
     })),
   ];
 

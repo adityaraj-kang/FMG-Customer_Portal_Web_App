@@ -100,6 +100,12 @@ const SERVICE_LABELS: Record<string, string> = {
   roofing: "Roofing", pest: "Pest Control",
 };
 
+// ─── Derive two-letter initials from a vendor name ────────────────
+function vendorInitials(name: string): string {
+  const words = name.split(/\s+/).filter((w) => /[A-Za-z]/.test(w[0] ?? ""));
+  return words.slice(0, 2).map((w) => w[0].toUpperCase()).join("");
+}
+
 // ─── Main component ───────────────────────────────────────────────
 export function VendorOptionsScreen() {
   const navigate = useNavigate();
@@ -118,8 +124,8 @@ export function VendorOptionsScreen() {
 
   const mapMarkers: DCMapMarker[] = [
     { position: USER_POS,     type: "user" },
-    { position: positions[0], type: "vendor", price: vendors[0].price },
-    { position: positions[1], type: "vendor", price: vendors[1].price },
+    { position: positions[0], type: "vendor", initials: vendorInitials(vendors[0].name), avatarColor: "#FFC043", rating: String(vendors[0].rating) },
+    { position: positions[1], type: "vendor", initials: vendorInitials(vendors[1].name), avatarColor: "#FF4D00", rating: String(vendors[1].rating) },
   ];
 
   function handleConfirm() {

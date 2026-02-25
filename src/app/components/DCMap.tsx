@@ -193,7 +193,7 @@ function VendorMarker({ price, index }: { price?: number; index: number }) {
 // ─── Vendor avatar marker ─────────────────────────────────────────
 function AvatarVendorMarker({
   initials, avatarColor, rating, index,
-}: { initials: string; avatarColor: string; rating: string; index: number }) {
+}: { initials: string; avatarColor: string; rating?: string; index: number }) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0, y: -6 }}
@@ -234,37 +234,39 @@ function AvatarVendorMarker({
         >
           {initials}
         </span>
-        {/* Rating badge — bottom-right */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: -5,
-            right: -7,
-            backgroundColor: "#1A1A18",
-            border: "1px solid rgba(255,255,255,0.18)",
-            borderRadius: 999,
-            paddingTop: 1,
-            paddingBottom: 1,
-            paddingLeft: 4,
-            paddingRight: 5,
-            display: "flex",
-            alignItems: "center",
-            gap: 2,
-          }}
-        >
-          <span style={{ color: "#FFC043", fontSize: 8, lineHeight: 1 }}>★</span>
-          <span
+        {/* Rating badge — bottom-right (only shown when rating provided) */}
+        {rating && (
+          <div
             style={{
-              color: "#FFFFFF",
-              fontSize: 9,
-              fontWeight: 700,
-              fontFamily: "'DM Sans', sans-serif",
-              letterSpacing: "-0.01em",
+              position: "absolute",
+              bottom: -5,
+              right: -7,
+              backgroundColor: "#1A1A18",
+              border: "1px solid rgba(255,255,255,0.18)",
+              borderRadius: 999,
+              paddingTop: 1,
+              paddingBottom: 1,
+              paddingLeft: 4,
+              paddingRight: 5,
+              display: "flex",
+              alignItems: "center",
+              gap: 2,
             }}
           >
-            {rating}
-          </span>
-        </div>
+            <span style={{ color: "#FFC043", fontSize: 8, lineHeight: 1 }}>★</span>
+            <span
+              style={{
+                color: "#FFFFFF",
+                fontSize: 9,
+                fontWeight: 700,
+                fontFamily: "'DM Sans', sans-serif",
+                letterSpacing: "-0.01em",
+              }}
+            >
+              {rating}
+            </span>
+          </div>
+        )}
       </div>
       {/* Tail dot */}
       <div

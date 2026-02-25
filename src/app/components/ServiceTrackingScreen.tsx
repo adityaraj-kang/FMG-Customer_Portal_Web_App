@@ -138,9 +138,9 @@ export function ServiceTrackingScreen() {
 
   const mapMarkers: DCMapMarker[] = useMemo(() => [
     { position: USER_POS,  type: "user" },
-    { position: vendorPos, type: "vendor", price: vendor?.price ?? 0 },
+    { position: vendorPos, type: "vendor", initials: profile.initials, avatarColor: `hsl(${profile.avatarHue}, 55%, 42%)`, rating: String(vendor?.rating ?? 4.8) },
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  ], [vendorPos[0], vendorPos[1], vendor?.price]);
+  ], [vendorPos[0], vendorPos[1], vendor?.rating]);
 
   // Avatar colors — muted, dark-friendly
   const avatarBg     = `linear-gradient(135deg, hsl(${profile.avatarHue},42%,17%), hsl(${profile.avatarHue},32%,11%))`;
