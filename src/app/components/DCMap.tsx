@@ -77,9 +77,14 @@ const LIGHT_STYLES: google.maps.MapTypeStyle[] = [
 
 // ─── Types ────────────────────────────────────────────────────────
 export interface DCMapMarker {
-  position: [number, number]; // [lat, lng]
-  type:     "user" | "vendor";
-  price?:   number;
+  position:     [number, number]; // [lat, lng]
+  type:         "user" | "vendor";
+  // Price pill variant
+  price?:       number;
+  // Avatar variant
+  initials?:    string;
+  avatarColor?: string;
+  rating?:      string;
 }
 
 interface DCMapProps {
@@ -179,6 +184,96 @@ function VendorMarker({ price, index }: { price?: number; index: number }) {
           borderRadius: "50%",
           background: "#FF4D00",
           boxShadow: "0 1px 6px rgba(255,77,0,0.6)",
+        }}
+      />
+    </motion.div>
+  );
+}
+
+// ─── Vendor avatar marker ─────────────────────────────────────────
+function AvatarVendorMarker({
+  initials, avatarColor, rating, index,
+}: { initials: string; avatarColor: string; rating: string; index: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0, y: -6 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ delay: 0.3 + index * 0.15, type: "spring", stiffness: 400, damping: 22 }}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 2,
+        transform: "translate(-50%, -100%)",
+        pointerEvents: "none",
+      }}
+    >
+      {/* Avatar circle */}
+      <div
+        style={{
+          position: "relative",
+          width: 36,
+          height: 36,
+          borderRadius: "50%",
+          backgroundColor: avatarColor,
+          border: "2px solid rgba(255,255,255,0.9)",
+          boxShadow: "0 3px 16px rgba(0,0,0,0.45), 0 1px 4px rgba(0,0,0,0.3)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <span
+          style={{
+            color: "#FFFFFF",
+            fontSize: 13,
+            fontWeight: 700,
+            fontFamily: "'DM Sans', sans-serif",
+            letterSpacing: "-0.02em",
+          }}
+        >
+          {initials}
+        </span>
+        {/* Rating badge — bottom-right */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: -5,
+            right: -7,
+            backgroundColor: "#1A1A18",
+            border: "1px solid rgba(255,255,255,0.18)",
+            borderRadius: 999,
+            paddingTop: 1,
+            paddingBottom: 1,
+            paddingLeft: 4,
+            paddingRight: 5,
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+          }}
+        >
+          <span style={{ color: "#FFC043", fontSize: 8, lineHeight: 1 }}>★</span>
+          <span
+            style={{
+              color: "#FFFFFF",
+              fontSize: 9,
+              fontWeight: 700,
+              fontFamily: "'DM Sans', sans-serif",
+              letterSpacing: "-0.01em",
+            }}
+          >
+            {rating}
+          </span>
+        </div>
+      </div>
+      {/* Tail dot */}
+      <div
+        style={{
+          width: 5,
+          height: 5,
+          borderRadius: "50%",
+          background: avatarColor,
+          boxShadow: "0 1px 6px rgba(0,0,0,0.4)",
         }}
       />
     </motion.div>
@@ -307,6 +402,13 @@ export function DCMap({ center, zoom, markers = [], style }: DCMapProps) {
           >
             {m.type === "user" ? (
               <UserMarker />
+            ) : m.initials ? (
+              <AvatarVendorMarker
+                initials={m.initials}
+                avatarColor={m.avatarColor ?? "#FF4D00"}
+                rating={m.rating ?? "5.0"}
+                index={i}
+              />
             ) : (
               <VendorMarker price={m.price} index={i} />
             )}
