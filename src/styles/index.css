@@ -1,0 +1,165 @@
+@import './fonts.css';
+@import './tailwind.css';
+@import './theme.css';
+
+/* ── Full-viewport reset for responsive web ── */
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+/* ── DC Color theme tokens ─────────────────────────────────────────────── */
+/* Warm neutral system — dark is warm-black, not blue-black                */
+/* Light is Notion-warm off-white, not cold grey                           */
+
+:root,
+.theme-dark {
+  /* 3-layer surface hierarchy — warm blacks */
+  --dc-bg:              #0C0C0A;       /* warm base black */
+  --dc-surface:         #141411;       /* 4% lighter — card surface */
+  --dc-surface-elevated:#1C1C19;       /* another 4% — modals, dropdowns */
+
+  /* Typography — warm whites */
+  --dc-text-primary:    #F4F4EF;       /* warm white, not pure */
+  --dc-text-secondary:  #A09D93;       /* warm mid-grey, 62% */
+  --dc-text-tertiary:   #66635B;       /* warm low-grey, 40% */
+
+  /* Borders — opacity-based so they adapt */
+  --dc-border:   rgba(244, 244, 239, 0.09);  /* 9% of warm white */
+  --dc-divider:  rgba(244, 244, 239, 0.06);  /* 6% of warm white — hairline */
+
+  /* Navigation — active = brand CTA, inactive = 40% opacity */
+  --dc-nav-active:  #FF4D00;
+  --dc-nav-inactive: rgba(244, 244, 239, 0.40);
+
+  /* Accent tint — 8% for card active states */
+  --dc-cta-tint: rgba(255, 77, 0, 0.08);
+
+  /* Success system — slightly desaturated, feels premium not garish */
+  --dc-success:      #30D158;
+  --dc-success-tint: rgba(48, 209, 88, 0.10);
+
+  /* Glass — frosted overlay */
+  --dc-glass-overlay:  rgba(12, 12, 10, 0.72);
+  --dc-glass-border:   rgba(244, 244, 239, 0.10);
+
+  /* Shell chrome */
+  --dc-home-indicator:  rgba(244, 244, 239, 0.22);
+  --dc-shell-bg:        #060605;
+  --dc-status-fill:     #F4F4EF;
+  --dc-shell-inner-shadow: rgba(244, 244, 239, 0.07);
+  --dc-shell-outer-shadow: rgba(244, 244, 239, 0.04);
+
+  /* shadcn/ui Sidebar — override to use DC Color system */
+  --sidebar:                  var(--dc-bg);
+  --sidebar-foreground:       var(--dc-text-primary);
+  --sidebar-border:           var(--dc-border);
+  --sidebar-accent:           rgba(255, 77, 0, 0.08);
+  --sidebar-accent-foreground: var(--dc-text-primary);
+  --sidebar-primary:          #FF4D00;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-ring:             rgba(255, 77, 0, 0.40);
+}
+
+.theme-light {
+  /* 3-layer surface hierarchy — Notion warm off-white family */
+  --dc-bg:               #F7F6F2;      /* Notion off-white */
+  --dc-surface:          #EEECEA;      /* 4% step down */
+  --dc-surface-elevated: #FDFDFB;      /* near-white elevated */
+
+  /* Typography — warm darks */
+  --dc-text-primary:    #1A1A14;       /* warm near-black */
+  --dc-text-secondary:  #5C5852;       /* warm dark grey, 60% */
+  --dc-text-tertiary:   #9E9B91;       /* warm mid-grey, 40% */
+
+  /* Borders — opacity-based warm darks */
+  --dc-border:   rgba(26, 26, 20, 0.09);   /* 9% warm black */
+  --dc-divider:  rgba(26, 26, 20, 0.06);   /* 6% warm black — hairline */
+
+  /* Navigation — active = brand CTA, inactive = 40% opacity */
+  --dc-nav-active:  #FF4D00;
+  --dc-nav-inactive: rgba(26, 26, 20, 0.38);
+
+  /* Accent tint */
+  --dc-cta-tint: rgba(255, 77, 0, 0.07);
+
+  /* Success system */
+  --dc-success:      #28A745;
+  --dc-success-tint: rgba(40, 167, 69, 0.10);
+
+  /* Glass — frosted light overlay */
+  --dc-glass-overlay:  rgba(247, 246, 242, 0.88);
+  --dc-glass-border:   rgba(26, 26, 20, 0.10);
+
+  /* Shell chrome */
+  --dc-home-indicator:  rgba(26, 26, 20, 0.18);
+  --dc-shell-bg:        #D4D2CC;
+  --dc-status-fill:     #1A1A14;
+  --dc-shell-inner-shadow: rgba(0, 0, 0, 0.06);
+  --dc-shell-outer-shadow: rgba(0, 0, 0, 0.04);
+
+  /* shadcn/ui Sidebar — override to use DC Color system */
+  --sidebar:                  var(--dc-bg);
+  --sidebar-foreground:       var(--dc-text-primary);
+  --sidebar-border:           var(--dc-border);
+  --sidebar-accent:           rgba(255, 77, 0, 0.07);
+  --sidebar-accent-foreground: var(--dc-text-primary);
+  --sidebar-primary:          #FF4D00;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-ring:             rgba(255, 77, 0, 0.30);
+}
+
+/* ── Hide all scrollbars globally ── */
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Smooth theme transitions on shell ── */
+.theme-dark,
+.theme-light {
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease,
+    border-color 0.35s ease;
+}
+
+/* ── Input focus ring — accent at 15% ── */
+input:focus,
+textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 77, 0, 0.15);
+}
+
+/* ── Noise grain texture — applied to hero / card surfaces ── */
+/* Use .dc-grain on elements where tactility is needed        */
+.dc-grain {
+  position: relative;
+}
+.dc-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.034;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Section label caps — Notion secondary label treatment ── */
+.dc-section-label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 11px;
+  font-weight: 500;
+  opacity: 0.55;
+}
+
+/* ── Button & interactive press states ── */
+button {
+  -webkit-tap-highlight-color: transparent;
+}
