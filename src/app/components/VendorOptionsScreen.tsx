@@ -226,7 +226,7 @@ export function VendorOptionsScreen() {
                     onClick={handleConfirm}
                     style={{ width: "100%", height: 52, backgroundColor: T.cta, border: "none", borderRadius: R.md, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, boxShadow: "0 4px 20px rgba(255,77,0,0.38)" }}
                   >
-                    <span style={{ color: "#000000", fontSize: TYPE.callout, fontWeight: 700, letterSpacing: "-0.012em", fontFamily: font }}>Book {chosenVendor?.name}</span>
+                    <span style={{ color: "#000000", fontSize: TYPE.callout, fontWeight: 700, letterSpacing: "-0.012em", fontFamily: font }}>{selected === "best" ? "Book Best Value" : "Book Fastest ETA"}</span>
                     <span style={{ color: "rgba(0,0,0,0.55)", fontSize: TYPE.callout, fontWeight: 600, fontFamily: font }}>· ${chosenVendor?.price}</span>
                     <ArrowRight size={16} color="#000000" weight="bold" />
                   </motion.button>
@@ -282,7 +282,7 @@ export function VendorOptionsScreen() {
         transition={{ delay: 0.42, duration: 0.28, ease: IOS }}
         style={{
           position: "absolute",
-          bottom: 308,
+          bottom: 280,
           left: "50%",
           transform: "translateX(-50%)",
           zIndex: 12,
@@ -467,28 +467,31 @@ export function VendorOptionsScreen() {
                     flexWrap: "nowrap" as const,
                     overflow: "hidden",
                   }}>
-                    <Star size={11} color="#FFC043" weight="fill" />
+                    <Star size={11} color="#FFC043" weight="fill" style={{ flexShrink: 0 }} />
                     <span style={{
                       color: T.textSecondary,
                       fontSize: TYPE.caption2,
                       fontFamily: font,
+                      flexShrink: 0,
                     }}>
                       {vendor.rating}
                     </span>
-                    <span style={{ color: T.divider, fontSize: TYPE.caption2, fontFamily: font }}>·</span>
-                    <Clock size={10} color={T.textTertiary} />
+                    <span style={{ color: T.divider, fontSize: TYPE.caption2, fontFamily: font, flexShrink: 0 }}>·</span>
+                    <Clock size={10} color={T.textTertiary} style={{ flexShrink: 0 }} />
                     <span style={{
                       color: T.textSecondary,
                       fontSize: TYPE.caption2,
                       fontFamily: font,
+                      flexShrink: 0,
                     }}>
                       {vendor.eta}
                     </span>
-                    <span style={{ color: T.divider, fontSize: TYPE.caption2, fontFamily: font }}>·</span>
+                    <span style={{ color: T.divider, fontSize: TYPE.caption2, fontFamily: font, flexShrink: 0 }}>·</span>
                     <span style={{
                       color: T.textTertiary,
                       fontSize: TYPE.caption2,
                       fontFamily: font,
+                      flexShrink: 0,
                     }}>
                       {vendor.jobs} jobs
                     </span>
