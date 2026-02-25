@@ -79,9 +79,6 @@ const LIGHT_STYLES: google.maps.MapTypeStyle[] = [
 export interface DCMapMarker {
   position:     [number, number]; // [lat, lng]
   type:         "user" | "vendor";
-  // Price pill variant
-  price?:       number;
-  // Avatar variant
   initials?:    string;
   avatarColor?: string;
   rating?:      string;
@@ -139,8 +136,10 @@ function UserMarker() {
   );
 }
 
-// ─── Vendor price pill marker ─────────────────────────────────────
-function VendorMarker({ price, index }: { price?: number; index: number }) {
+// ─── Vendor avatar marker (matches Figma Make spec exactly) ──────
+function VendorMarker({
+  initials = "V", avatarColor = "#2E93FA", rating, index,
+}: { initials?: string; avatarColor?: string; rating?: string; index: number }) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0, y: -6 }}
@@ -150,60 +149,7 @@ function VendorMarker({ price, index }: { price?: number; index: number }) {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: 2,
-        transform: "translate(-50%, -100%)",
-        pointerEvents: "none",
-      }}
-    >
-      {/* Pill */}
-      <div
-        style={{
-          background: "#FF4D00",
-          color: "#ffffff",
-          borderRadius: 9999,
-          paddingTop: 5,
-          paddingBottom: 5,
-          paddingLeft: 11,
-          paddingRight: 11,
-          fontSize: 12,
-          fontWeight: 800,
-          fontFamily: "'DM Sans', sans-serif",
-          letterSpacing: "-0.03em",
-          whiteSpace: "nowrap",
-          border: "1.5px solid rgba(255,255,255,0.18)",
-          boxShadow: "0 3px 16px rgba(255,77,0,0.6), 0 1px 4px rgba(0,0,0,0.4)",
-        }}
-      >
-        ${price ?? 0}
-      </div>
-      {/* Tail dot */}
-      <div
-        style={{
-          width: 5,
-          height: 5,
-          borderRadius: "50%",
-          background: "#FF4D00",
-          boxShadow: "0 1px 6px rgba(255,77,0,0.6)",
-        }}
-      />
-    </motion.div>
-  );
-}
-
-// ─── Vendor avatar marker ─────────────────────────────────────────
-function AvatarVendorMarker({
-  initials, avatarColor, rating, index,
-}: { initials: string; avatarColor: string; rating?: string; index: number }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0, y: -6 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      transition={{ delay: 0.3 + index * 0.15, type: "spring", stiffness: 400, damping: 22 }}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: 2,
+        gap: 3,
         transform: "translate(-50%, -100%)",
         pointerEvents: "none",
       }}
@@ -211,13 +157,12 @@ function AvatarVendorMarker({
       {/* Avatar circle */}
       <div
         style={{
-          position: "relative",
-          width: 36,
-          height: 36,
+          width: 42,
+          height: 42,
           borderRadius: "50%",
           backgroundColor: avatarColor,
-          border: "2px solid rgba(255,255,255,0.9)",
-          boxShadow: "0 3px 16px rgba(0,0,0,0.45), 0 1px 4px rgba(0,0,0,0.3)",
+          border: "2.5px solid rgba(13,13,13,0.92)",
+          boxShadow: `0 0 0 1.5px ${avatarColor}55, 0 4px 14px rgba(0,0,0,0.55)`,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -225,49 +170,46 @@ function AvatarVendorMarker({
       >
         <span
           style={{
-            color: "#FFFFFF",
-            fontSize: 13,
-            fontWeight: 700,
+            color: "#000000",
+            fontSize: 11,
+            fontWeight: 800,
             fontFamily: "'DM Sans', sans-serif",
-            letterSpacing: "-0.02em",
+            letterSpacing: "0.01em",
           }}
         >
           {initials}
         </span>
-        {/* Rating badge — bottom-right (only shown when rating provided) */}
-        {rating && (
-          <div
+      </div>
+      {/* Rating chip — below circle, only shown when rating provided */}
+      {rating && (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 3,
+            backgroundColor: "rgba(13,13,13,0.88)",
+            border: "1px solid rgba(255,255,255,0.11)",
+            borderRadius: 9999,
+            paddingLeft: 5,
+            paddingRight: 6,
+            paddingTop: 2,
+            paddingBottom: 2,
+            backdropFilter: "blur(8px)",
+          }}
+        >
+          <span style={{ fontSize: 8, lineHeight: 1 }}>⭐</span>
+          <span
             style={{
-              position: "absolute",
-              bottom: -5,
-              right: -7,
-              backgroundColor: "#1A1A18",
-              border: "1px solid rgba(255,255,255,0.18)",
-              borderRadius: 999,
-              paddingTop: 1,
-              paddingBottom: 1,
-              paddingLeft: 4,
-              paddingRight: 5,
-              display: "flex",
-              alignItems: "center",
-              gap: 2,
+              color: "#FFFFFF",
+              fontSize: 9,
+              fontWeight: 700,
+              fontFamily: "'DM Sans', sans-serif",
             }}
           >
-            <span style={{ color: "#FFC043", fontSize: 8, lineHeight: 1 }}>★</span>
-            <span
-              style={{
-                color: "#FFFFFF",
-                fontSize: 9,
-                fontWeight: 700,
-                fontFamily: "'DM Sans', sans-serif",
-                letterSpacing: "-0.01em",
-              }}
-            >
-              {rating}
-            </span>
-          </div>
-        )}
-      </div>
+            {rating}
+          </span>
+        </div>
+      )}
       {/* Tail dot */}
       <div
         style={{
@@ -275,7 +217,7 @@ function AvatarVendorMarker({
           height: 5,
           borderRadius: "50%",
           background: avatarColor,
-          boxShadow: "0 1px 6px rgba(0,0,0,0.4)",
+          boxShadow: `0 1px 6px ${avatarColor}99`,
         }}
       />
     </motion.div>
@@ -404,15 +346,13 @@ export function DCMap({ center, zoom, markers = [], style }: DCMapProps) {
           >
             {m.type === "user" ? (
               <UserMarker />
-            ) : m.initials ? (
-              <AvatarVendorMarker
+            ) : (
+              <VendorMarker
                 initials={m.initials}
-                avatarColor={m.avatarColor ?? "#FF4D00"}
-                rating={m.rating ?? "5.0"}
+                avatarColor={m.avatarColor}
+                rating={m.rating}
                 index={i}
               />
-            ) : (
-              <VendorMarker price={m.price} index={i} />
             )}
           </OverlayView>
         ))}
