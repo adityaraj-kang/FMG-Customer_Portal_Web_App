@@ -3,8 +3,8 @@
 
 import { useParams, useNavigate } from "react-router";
 import {
-  CaretLeft, MapPin, User, Star, Clock, CurrencyDollar,
-  CheckCircle, Phone, Receipt, ArrowCounterClockwise,
+  CaretLeft, User, Star, Clock,
+  CheckCircle, Receipt, ArrowCounterClockwise,
   Truck, PipeWrench, Snowflake, Lightning, Tree, Hammer, HouseLine, Bug,
 } from "@phosphor-icons/react";
 import { motion } from "motion/react";
@@ -154,15 +154,15 @@ export function JobDetailScreen() {
 
         <div style={{ height: "0.5px", backgroundColor: T.border, marginLeft: m }} />
 
-        {/* Service location */}
+        {/* Service category */}
         <div style={{ paddingTop: 20, paddingRight: m, paddingBottom: 20, paddingLeft: m }}>
           <span style={{ color: T.textTertiary, fontSize: TYPE.caption1, fontWeight: 500, letterSpacing: "0.04em", textTransform: "uppercase" as const, fontFamily: font, display: "block", marginBottom: 12 }}>
-            Location
+            Service Category
           </span>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <MapPin size={16} color={T.cta} weight="fill" />
+            <Icon size={16} color={color} weight="fill" />
             <span style={{ color: T.textSecondary, fontSize: TYPE.subhead, fontFamily: font }}>
-              1842 Peachtree Rd NW, Atlanta, GA
+              {job.serviceLabel}
             </span>
           </div>
         </div>

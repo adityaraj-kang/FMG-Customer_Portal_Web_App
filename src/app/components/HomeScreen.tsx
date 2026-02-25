@@ -51,13 +51,13 @@ function getGreeting(): string {
 // User pinned at Peachtree & Baker — downtown Atlanta
 const USER_POS: [number, number] = [33.7490, -84.3882];
 
-// Ambient vendor price pins — make the map feel alive on home
+// Ambient vendor avatar pins — make the map feel alive on home
 const MAP_MARKERS: DCMapMarker[] = [
   { position: USER_POS,                    type: "user" },
-  { position: [33.7600, -84.4030],         type: "vendor", price: 85  },
-  { position: [33.7420, -84.3710],         type: "vendor", price: 110 },
-  { position: [33.7555, -84.3800],         type: "vendor", price: 95  },
-  { position: [33.7480, -84.3960],         type: "vendor", price: 130 },
+  { position: [33.7600, -84.4030],         type: "vendor", initials: "MR", avatarColor: "#2E93FA", rating: "4.9" },
+  { position: [33.7420, -84.3710],         type: "vendor", initials: "JS", avatarColor: "#34C759", rating: "4.7" },
+  { position: [33.7555, -84.3800],         type: "vendor", initials: "AL", avatarColor: "#A78BFA", rating: "4.8" },
+  { position: [33.7480, -84.3960],         type: "vendor", initials: "DK", avatarColor: "#FFC043", rating: "4.6" },
 ];
 
 // ─── Pulsing live indicator ──────────────────────────────────────

@@ -1,5 +1,5 @@
 // VendorOptionsScreen.tsx — Uber-style vendor selection
-// Map-first paradigm. Two cards: badge → name → price → single meta line.
+// Map-first paradigm. Two cards: badge → price → single meta line.
 // Confirm CTA slides in on selection — no clutter until needed.
 
 import { useState } from "react";
@@ -423,24 +423,7 @@ export function VendorOptionsScreen() {
                     </span>
                   </div>
 
-                  {/* ── Row 2: Vendor name ────────────────────── */}
-                  <div style={{
-                    color: T.textPrimary,
-                    fontSize: TYPE.footnote,
-                    fontWeight: 600,
-                    fontFamily: font,
-                    letterSpacing: "-0.014em",
-                    marginBottom: 10,
-                    lineHeight: 1.25,
-                    overflow: "hidden",
-                    display: "-webkit-box",
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: "vertical" as const,
-                  }}>
-                    {vendor.name}
-                  </div>
-
-                  {/* ── Row 3: Dominant price ─────────────────── */}
+                  {/* ── Row 2: Dominant price ─────────────────── */}
                   <div style={{
                     display: "flex",
                     alignItems: "baseline",
@@ -470,12 +453,13 @@ export function VendorOptionsScreen() {
                     </span>
                   </div>
 
-                  {/* ── Row 4: Single meta line ───────────────── */}
+                  {/* ── Row 3: Single meta line — nowrap ─────── */}
                   <div style={{
                     display: "flex",
                     alignItems: "center",
                     gap: 5,
-                    flexWrap: "wrap" as const,
+                    flexWrap: "nowrap" as const,
+                    overflow: "hidden",
                   }}>
                     <Star size={11} color="#FFC043" weight="fill" />
                     <span style={{
@@ -537,7 +521,7 @@ export function VendorOptionsScreen() {
                     letterSpacing: "-0.012em",
                     fontFamily: font,
                   }}>
-                    Book {chosenVendor?.name}
+                    {selected === "best" ? "Book Best Value" : "Book Fastest ETA"}
                   </span>
                   <span style={{
                     color: "rgba(0,0,0,0.55)",
