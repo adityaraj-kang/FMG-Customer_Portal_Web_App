@@ -200,7 +200,6 @@ export function VendorOptionsScreen() {
                       {isBest ? <Trophy size={10} color={isSel ? T.cta : "#FFC043"} weight="fill" /> : <Lightning size={10} color={T.cta} weight="fill" />}
                       <span style={{ color: isSel ? T.cta : T.textSecondary, fontSize: TYPE.caption2, fontWeight: 700, fontFamily: font, letterSpacing: "0.02em", transition: "color 0.16s" }}>{vendor.badge}</span>
                     </div>
-                    <div style={{ color: T.textPrimary, fontSize: TYPE.footnote, fontWeight: 600, fontFamily: font, letterSpacing: "-0.014em", marginBottom: 10, lineHeight: 1.25, overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" as const }}>{vendor.name}</div>
                     <div style={{ display: "flex", alignItems: "baseline", gap: 1, marginBottom: 10 }}>
                       <span style={{ color: T.cta, fontSize: TYPE.caption1, fontWeight: 700, fontFamily: font, lineHeight: 1, alignSelf: "flex-start", paddingTop: 4 }}>$</span>
                       <span style={{ color: T.cta, fontSize: 30, fontWeight: 800, fontFamily: font, letterSpacing: "-0.04em", lineHeight: 1 }}>{vendor.price}</span>
