@@ -222,7 +222,7 @@ export function VendorFeedbackScreen() {
                   >
                     <Star
                       size={36}
-                      color={n <= displayStars ? "#FFC043" : T.surfaceElevated}
+                      color={n <= displayStars ? "#FFC043" : "rgba(255,255,255,0.22)"}
                       weight={n <= displayStars ? "fill" : "regular"}
                     />
                   </motion.div>
