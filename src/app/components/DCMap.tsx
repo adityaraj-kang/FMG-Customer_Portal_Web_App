@@ -1,6 +1,6 @@
 // DCMap.tsx — Google Maps integration via @react-google-maps/api
 // Same DCMapMarker interface as before — zero changes required in any screen.
-// API key: AIzaSyDOQoeCNbU_A6r9pF75EjmhG4eQVoq8sjQ
+// API key is loaded from VITE_GOOGLE_MAPS_API_KEY environment variable.
 
 import { useCallback, useRef } from "react";
 import { motion } from "motion/react";
@@ -11,7 +11,7 @@ import {
 } from "@react-google-maps/api";
 import { useTheme } from "../ThemeContext";
 
-const GOOGLE_MAPS_API_KEY = "AIzaSyDOQoeCNbU_A6r9pF75EjmhG4eQVoq8sjQ";
+const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string;
 
 // ─── Inject pulse CSS once ────────────────────────────────────────
 function injectStyles() {
